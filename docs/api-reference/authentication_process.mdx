@@ -1,0 +1,91 @@
+---
+title: 'Authentication'
+description: "All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+
+Authentication credentials are required to access the API endpoints. Auth 2.0 JWT"
+---
+
+
+<Card
+  title="Authentication API"
+  icon="coins"
+  href="https://docs.crazygoldfish.com/api-reference/endpoint/authentication">
+
+Endpoint to obtain authenticate token 
+</Card>
+
+
+
+---
+## 1. Obtaining Access Token
+
+Before accessing any endpoints, clients need to obtain an access token through the authentication process, using Username and Password The access token serves as a credential to authenticate the client's requests to the API.
+
+### POST /token
+
+### Request - Body
+
+```json
+
+username = username
+password = password
+
+```
+### Response
+
+```json
+{
+    "access_token": <access-token>, # with 30 minute expire
+    "token_type": "bearer"
+}
+
+```
+
+### Sample Request
+
+```json
+
+curl --location 'http://34.49.156.36/token' \
+--header 'accept: application/json' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'grant_type=' \
+--data-urlencode 'username=iyc' \
+--data-urlencode 'password=iyc@09876$' \
+--data-urlencode 'scope=' \
+--data-urlencode 'client_id=' \
+--data-urlencode 'client_secret='
+
+```
+
+## 2. Including Access Token in Requests
+
+After obtaining the access token, clients include it in the Authorization header of subsequent requests as a Bearer token.
+
+### Sample Request
+
+```json
+curl --location 'http://34.49.156.36/v1/evaluation/' \
+--header 'accept: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZXhwIjoxNzEyNTY2MDg0fQ.LOWAwIbbZ_hc7Y20CZwsXgSyOTUMoncc51S0a8qmFy0' \
+--header 'Content-Type: application/json' \
+--data '{
+  "client_id": "0001",
+  "student_id": "S0001",
+  "student_name": "name",
+  "subject": "english",
+  "institution_id": "I0001",
+  "teacher_id": "T0001",
+  "parent_id": "P0001",
+  "class_info": "8",
+  "image_urls": [
+    "https://storage.googleapis.com/ncert-images/english/WhatsApp%20Image%202024-03-05%20at%208.16.56%20PM_4.jpeg"
+  ]
+}'
+
+```
+
+
+## 3.Conclusion
+
+The authentication process using a Bearer token ensures secure access to the API endpoints while allowing clients to authenticate their requests efficiently. By following this process, clients can obtain, include, and refresh access tokens to interact with the API securely and seamlessly.
+

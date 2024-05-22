@@ -1,0 +1,753 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Evaluation Report API",
+    "description": "An API for retrieving evaluation reports.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api-staging.crazygoldfish.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/v1/evaluation": {
+      "get": {
+        "summary": "Get Evaluation Reports",
+        "description": "Retrieves evaluation reports based on specified criteria.",
+        "parameters": [
+          {
+            "name": "accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"],
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "description": "Unique identifier assigned to the client accessing the API.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "evaluation_format",
+            "in": "query",
+            "description": "Specifies the format of evaluation report to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["json", "html_link"],
+              "default": "json"
+            }
+          },
+          {
+            "name": "evaluation_type",
+            "in": "query",
+            "description": "Specifies the type of evaluation report to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["Basic", "Overlay", "Actionable"],
+              "default": "Basic"
+            }
+          },
+          {
+            "name": "student_id",
+            "in": "query",
+            "description": "Identifies the specific student for whom the evaluation is being requested.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "institution_id",
+            "in": "query",
+            "description": "Represents the unique identifier of the institution to which the student belongs.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "teacher_id",
+            "in": "query",
+            "description": "Identifies the teacher responsible for the student's evaluation.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parent_id",
+            "in": "query",
+            "description": "Specifies the unique identifier of the parent associated with the student.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "class",
+            "in": "query",
+            "description": "Indicates the class or grade level of the student.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subject",
+            "in": "query",
+            "description": "Specifies the subject or topic of the handwritten notes being evaluated.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Start date of the evaluation date range (Default is today).",
+            "required":false,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2024-05-17"
+            }
+          
+            
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required":false,
+            "description": "End date of the evaluation date range (Default is today).",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "default": "2024-05-17"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "200"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "request successful"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "client_id": {
+                            "type": "string"
+                          },
+                          "evaluation": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "overview": {
+                                  "type": "object",
+                                  "properties": {
+                                    "summary": {
+                                      "type": "string"
+                                    },
+                                    "holistic_evaluation": {
+                                      "type": "object",
+                                      "properties": {
+                                        "creativity": {
+                                          "type": "string"
+                                        },
+                                        "organization": {
+                                          "type": "string"
+                                        },
+                                        "content_relevance": {
+                                          "type": "string"
+                                        },
+                                        "clarity_expression": {
+                                          "type": "string"
+                                        },
+                                        "grammar_punctuation": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "actionables": {
+                                  "type": "object",
+                                  "properties": {
+                                    "actionable_points": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "report_header": {
+                                  "type": "object",
+                                  "properties": {
+                                    "class": {
+                                      "type": "string"
+                                    },
+                                    "subject": {
+                                      "type": "string"
+                                    },
+                                    "no_of_images": {
+                                      "type": "string"
+                                    },
+                                    "student_name": {
+                                      "type": "string"
+                                    },
+                                    "date_of_evaluation": {
+                                      "type": "string"
+                                    },
+                                    "total_questions_attempted": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "detailed_evaluation": {
+                                  "type": "object",
+                                  "properties": {
+                                    "image_assessment": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "image": {
+                                            "type": "string"
+                                          },
+                                          "questions": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "object",
+                                              "properties": {
+                                                "errors": {
+                                                  "type": "array",
+                                                  "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "error_type": {
+                                                        "type": "string"
+                                                      },
+                                                      "suggestions": {
+                                                        "type": "array",
+                                                        "items": {
+                                                          "type": "string"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "question": {
+                                                  "type": "integer"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "total_suggestions": {
+                                      "type": "integer"
+                                    },
+                                    "grammar_suggestions": {
+                                      "type": "integer"
+                                    },
+                                    "spelling_suggestions": {
+                                      "type": "integer"
+                                    },
+                                    "punctuation_suggestions": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "evaluation_id": {
+                            "type": "string"
+                          },
+                          "evaluation_type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/evaluation/": {
+ 
+      "post": {
+        "summary": "Submit Evaluation Request",
+        "description": "Allows B2B clients to submit a request for evaluation directly by providing reference links to the images.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "client_id": {
+                    "type": "string",
+                    "description": "Unique identifier assigned to the client accessing the API.",
+                    "example": "123456"
+                  },
+                  "student_id": {
+                    "type": "string",
+                    "description": "Identifies the specific student for whom the evaluation is being requested."
+                  },
+                  "institution_id": {
+                    "type": "string",
+                    "description": "Represents the unique identifier of the institution to which the student belongs."
+                  },
+                  "teacher_id": {
+                    "type": "string",
+                    "description": "Identifies the teacher responsible for the student's evaluation."
+                  },
+                  "parent_id": {
+                    "type": "string",
+                    "description": "Specifies the unique identifier of the parent associated with the student."
+                  },
+                  "class": {
+                    "type": "string",
+                    "description": "Indicates the class or grade level of the student."
+                  },
+                  "subject": {
+                    "type": "string",
+                    "description": "Specifies the subject or topic of the handwritten notes being evaluated."
+                  },
+                  "student_name": {
+                    "type": "string",
+                    "description": "Specifies the name of the student for whom the evaluation is being requested."
+                  },
+                  "image_urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Contains URLs pointing to the images of handwritten notes that are to be evaluated."
+                  }
+                },
+                "required": ["client_id", "student_id", "subject", "student_name", "image_urls"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "200"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Evaluation request submitted successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "evaluation_status": {
+                          "type": "string",
+                          "description": "Status of the evaluation request.",
+                          "example": "pending"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request body"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"],
+              "default": "application/json"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/evaluation/{id}": {
+      "get": {
+        "summary": "Get Evaluation Report by ID",
+        "description": "Retrieves an evaluation report based on the provided evaluation ID.",
+        "parameters": [
+          {
+            "name": "accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"],
+              "default": "application/json"
+            }
+          },
+
+
+
+
+          {
+            "name": "evaluation_id",
+            "in": "path",
+            "description": "Unique evaluation ID generated during image submissions.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "description": "Unique identifier assigned to the client accessing the API.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "evaluation_format",
+            "in": "query",
+            "description": "Specifies the format of evaluation report to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["json", "html_link"],
+              "default": "json"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "200"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "request successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "evalution_id": {
+                          "type": "string"
+                        },
+                        "client_id": {
+                          "type": "string"
+                        },
+                        "evaluation_type": {
+                          "type": "string"
+                        },
+                        "evaluation": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "report_header": {
+                                "type": "object",
+                                "properties": {
+                                  "student_name": {
+                                    "type": "string"
+                                  },
+                                  "subject": {
+                                    "type": "string"
+                                  },
+                                  "class": {
+                                    "type": "string"
+                                  },
+                                  "no_of_images": {
+                                    "type": "string"
+                                  },
+                                  "total_questions_attempted": {
+                                    "type": "string"
+                                  },
+                                  "date_of_evaluation": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "overview": {
+                                "type": "object",
+                                "properties": {
+                                  "holistic_evaluation": {
+                                    "type": "object",
+                                    "properties": {
+                                      "grammar_punctuation": {
+                                        "type": "string"
+                                      },
+                                      "clarity_expression": {
+                                        "type": "string"
+                                      },
+                                      "organization": {
+                                        "type": "string"
+                                      },
+                                      "content_relevance": {
+                                        "type": "string"
+                                      },
+                                      "creativity": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "summary": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "detailed_evaluation": {
+                                "type": "object",
+                                "properties": {
+                                  "total_suggestions": {
+                                    "type": "string"
+                                  },
+                                  "spelling_suggestions": {
+                                    "type": "string"
+                                  },
+                                  "punctuation_suggestions": {
+                                    "type": "string"
+                                  },
+                                  "grammar_suggestions": {
+                                    "type": "string"
+                                  },
+                                  "image_assessment": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "image": {
+                                          "type": "string"
+                                        },
+                                        "questions": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "errors": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "error_type": {
+                                                      "type": "string"
+                                                    },
+                                                    "suggestions": {
+                                                      "type": "array",
+                                                      "items": {
+                                                        "type": "string"
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "question": {
+                                                "type": "integer"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "actionables": {
+                                "type": "object",
+                                "properties": {
+                                  "actionable_points": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+
+      }
+    },
+    
+    "/token": {
+      "post": {
+        "summary": "Obtain Access Token",
+        "description": "Allows clients to obtain an access token through the authentication process using Username and Password.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "The username of the client."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The password associated with the username."
+                  },
+                  "grant_type": {
+                    "type": "string",
+                    "description": "OAuth 2.0 grant type."
+                  },
+                  "scope": {
+                    "type": "string",
+                    "description": "The scope of the access request."
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "description": "The client ID."
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "description": "The client secret."
+                  }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "The access token to be used for authentication with 30 minutes expire."
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "bearer",
+                      "description": "The token type."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

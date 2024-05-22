@@ -1,0 +1,48 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "CrazyGoldFish",
+  "logo": {
+    "dark": "/logo/cgf_big.svg",
+    "light": "/logo/cgf_big.svg"
+    
+  },
+  
+  
+  "favicon": "logo/cgf.png",
+  "colors": {
+    "primary": "#6953EC",
+    "light": "#826FF0",
+    "dark": "#6F5FE6",
+    "anchors": {
+      "from": "#826FF0",
+      "to": "#6F5FE6"
+    }
+  },
+ 
+
+ 
+  "navigation": [
+    {
+      "group": "API Documentation",
+      "pages": [
+        "api-reference/introduction",
+        "api-reference/authentication_process",
+        "api-reference/endpoint/authentication"
+      ]
+    },
+    {
+      "group": "Endpoints",
+      "pages": [
+        
+        "api-reference/endpoint/v1_evaluation_post",
+        "api-reference/endpoint/v1_evaluation",
+        "api-reference/endpoint/v1_evaluation_id"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "x": "https://x.com/mintlify",
+    "github": "https://github.com/mintlify",
+    "linkedin": "https://www.linkedin.com/company/mintsearch"
+  }
+}
