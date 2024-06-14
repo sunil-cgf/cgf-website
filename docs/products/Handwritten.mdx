@@ -1,0 +1,36 @@
+---
+title: 'Handwritten Notes Evaluation' 
+description: " Welcome to Handwritten Notes Evaluation API Documentation 👋"
+---
+
+The Handwritten Notes Evaluation API offers a comprehensive suite of endpoints to facilitate the evaluation process for B2B clients.
+
+> These endpoints allow clients to submit evaluation requests, retrieve evaluation reports, and access specific reports based on unique identifiers. With customizable filtering options and robust error handling, these endpoints provide a seamless integration experience for developers.
+
+
+
+  <Card title="Handwritten Notes" icon="Pen"
+  href="https://docs.crazygoldfish.com/api-reference/endpoint/v1_evaluation_post"
+>
+Evaluatuion API
+</Card>
+
+ ## Endpoints
+
+### 1. Submit Evaluation Request
+> Submit a request for evaluation directly by providing reference links to the images. The API downloads the images separately, generates an evaluation report based on the provided data, and returns an acknowledgment along with an evaluation ID.
+```
+POST /v1/evaluation
+```
+### 2. Get Specific Evaluation Report
+> Retrieve a specific evaluation report using its unique identifier (ID). Clients can access past evaluations or reference specific reports by providing the evaluation ID.
+
+```
+GET /v1/evaluation/{id}
+```
+### 3. Get All Evaluation Reports
+
+> Retrieve all the evaluation report or for a specific set of handwritten notes. Clients can provide parameters such as student name, class, subject, and date of evaluation to filter the results.
+```
+GET /v1/evaluation
+```

@@ -7,7 +7,7 @@
     
   },
   
-
+  
   "favicon": "logo/cgf.png",
   "colors": {
     "primary": "#6953EC",
@@ -19,26 +19,65 @@
     }
   },
  
-
- 
-  "navigation": [
+"anchors": [
     {
-      "group": "API Documentation",
+        "name": "Website",
+        "icon": "globe",
+        "url": "https://www.crazygoldfish.com/"
+    },
+    {
+      "name": "Product Roadmap",
+      "icon": "dropbox",
+      "url": "https://www.crazygoldfish.com/"
+  },
+  {
+    "name": "API Reference",
+    "icon": "terminal",
+    "url": "api-reference"
+}
+],
+
+  "navigation": [
+
+    {
+      "group": "Welcome",
       "pages": [
-        "api-reference/introduction",
-        "api-reference/authentication_process",
-        "api-reference/endpoint/authentication"
+        "home/introduction"
       ]
     },
     {
-      "group": "Endpoints",
+      "group": "Products",
       "pages": [
+       { "group": "K12",
+       "pages": [ "products/Handwritten"]}, 
+        "products/ielts",
+        "products/toefel"
         
+      ]
+    },  
+    {"group": "Authentication",
+      "pages": [
+        "home/authentication_process",
+        "api-reference/endpoint/authentication"
+
+      ]
+  },
+    {
+          "group": "K12",
+        "pages":[ 
+        {
+          "group": "Handwritten Evaluation",
+          "pages": [
         "api-reference/endpoint/v1_evaluation_post",
         "api-reference/endpoint/v1_evaluation",
-        "api-reference/endpoint/v1_evaluation_id"
-      ]
-    }
+        "api-reference/endpoint/v1_evaluation_id"]}]
+      },
+    {
+      "group": "IELTS",
+    "pages":[
+      "api-reference/endpoint/v1_ielts_evaluation_post",
+        "api-reference/endpoint/v1_ielts_evaluation"]
+  }
   ],
   "footerSocials": {
     "x": "https://x.com/mintlify",
