@@ -7,7 +7,18 @@
     
   },
   
-  
+
+  "analytics": {
+    "ga4": {
+        "measurementId": "G-RBB1495C8X"
+    },
+    "hotjar": {
+        "hjid": "5030771",
+        "hjsv": "6"
+    }
+
+},
+
   "favicon": "logo/cgf.png",
   "colors": {
     "primary": "#6953EC",
@@ -49,35 +60,49 @@
       "group": "Products",
       "pages": [
        { "group": "K12",
-       "pages": [ "products/Handwritten"]}, 
-        "products/ielts",
-        "products/toefel"
+       "pages": [ "products/Handwritten","products/usecases/k12"]}, 
+       { "group": "IELTS",
+       "pages": [ "products/ielts", "products/usecases/ielts"]},
+       { "group": "TOEFL",
+       "pages": [ "products/toefl", "products/usecases/toefl"]}
         
       ]
-    },  
-    {"group": "Authentication",
-      "pages": [
-        "home/authentication_process",
-        "api-reference/endpoint/authentication"
+    },     {"group": "Authentication",
+    "pages": [
+      "home/authentication_process",
+      "api-reference/endpoint/authentication"
 
-      ]
-  },
-    {
-          "group": "K12",
-        "pages":[ 
-        {
-          "group": "Handwritten Evaluation",
-          "pages": [
-        "api-reference/endpoint/v1_evaluation_post",
-        "api-reference/endpoint/v1_evaluation",
-        "api-reference/endpoint/v1_evaluation_id"]}]
-      },
+    ]
+},
+  {
+        "group": "K12",
+      "pages":[ 
+      {
+        "group": "Handwritten Evaluation",
+        "pages": [
+      "api-reference/endpoint/v1_evaluation_post",
+      "api-reference/endpoint/v1_evaluation",
+      "api-reference/endpoint/v1_evaluation_id"]}]
+    },
+ 
     {
       "group": "IELTS",
-    "pages":[
+    "pages":[{ "group": "IELTS Evaluation", 
+    "pages": [
       "api-reference/endpoint/v1_ielts_evaluation_post",
-        "api-reference/endpoint/v1_ielts_evaluation"]
-  }
+      "api-reference/endpoint/v1_ielts_evaluation"
+        ]}
+      ]
+  },
+  {
+    "group": "TOEFL",
+  "pages":[{ "group": "TOEFL Evaluation", 
+  "pages": [
+    "api-reference/endpoint/v1_toefl_evaluation_post",
+    "api-reference/endpoint/v1_toefl_evaluation"
+      ]}
+    ]
+}
   ],
   "footerSocials": {
     "x": "https://x.com/mintlify",

@@ -1,40 +1,41 @@
 ---
-title: " IELTS Evaluation "
-sidebarTitle: "IELTS Evaluation"
-description: " Welcome to the CrazyGoldFish's IELTS Evaluation API documentation. 👋"
+title: " TOEFL Evaluation "
+sidebarTitle: "TOEFL Evaluation"
+description: " Welcome to the CrazyGoldFish's TOEFL Evaluation API documentation. 👋"
 ---
 
-> Our API enables you to assess both questions and answers according to IELTS examination standards. Whether for Academic or General Training, this API allows you to submit questions and answers in various multimedia formats, providing scores, feedback, improvement suggestions, and objective error detection.
+> Our API enables you to assess both questions and answers according to TOEFL examination standards. Whether for Essentials or IBT, this API allows you to submit questions and answers in various multimedia formats, providing scores, feedback, improvement suggestions, and objective error detection.
 
 <Tip>
   Customize the evaluation with your own rubrics for tailored assessments.
 </Tip>
 
 <Card
-  title="IELTS"
+  title="TOEFL"
   icon="books"
-  href="https://docs.crazygoldfish.com/api-reference/endpoint/v1_ielts_evaluation_post"
+  href="https://docs.crazygoldfish.com/api-reference/endpoint/v1_toefl_evaluation_post"
 >
   Evaluatuion API
 </Card>
 
 ## Question Types:
 
-| Section | Exam Type | Task                                                            | Question Type |
-| ------- | --------- | --------------------------------------------------------------- | ------------- |
-| Writing | GT        | A point of view, argument or problem which you need to discuss. | ilt001        |
-|         |           | Writing a letter to Respond to a situation.                     | ilt004        |
-|         | AC        | A point of view, argument or problem which you need to discuss. | ilt002        |
-|         |           | Describe some visual information in your own words.             | ilt003        |
+| Section | Exam Type  | Task              | Question Type |
+| ------- | ---------- | ----------------- | ------------- |
+| Writing | Essentials | Build a sentence  | tf001         |
+|         |            | Email Brief       | tf002         |
+|         |            | Email Detail      | tf003         |
+|         |            | Academics Writing | tf004         |
+|         |            | Describe a Photo  | tf005         |
 
 <Note>
   Currently, this API is available exclusively for evaluating Writing Skills for
-  IELTS Academic and General Training.
+  TOEFL Essentials and IBT.
 </Note>
 
 # Key Features
 
-- **Automated Grading** : Efficiently grade IELTS writing tasks with high accuracy.
+- **Automated Grading** : Efficiently grade TOEFL writing tasks with high accuracy.
 
 - **Detailed Feedback** : Receive comprehensive feedback, including suggestions for improvement and objective error detection.
 
@@ -52,20 +53,20 @@ description: " Welcome to the CrazyGoldFish's IELTS Evaluation API documentation
   <Step title="Submit Evaluation Request">
  Submit a request for evaluation directly by providing questions and respective answers in a json format. The API generates an evaluation report based on the provided data, and returns an acknowledgment along with an evaluation ID.
 ```
-POST /v1/ielts/evaluation
+POST /v1/toefl/evaluation
 ```
   </Step>
   <Step title="Get Specific Evaluation Report">
 Retrieve a specific evaluation report using its unique identifier (ID). Clients can access past evaluations or reference specific reports by providing the evaluation ID.
 ```
-GET /v1/ielts/evaluation
+GET /v1/toefl/evaluation
 ```
 
   </Step>
   <Step title="Get All Evaluation Reports">
    Retrieve all the evaluation report or for a specific set of handwritten notes. Clients can provide parameters such as student name, class, subject, and date of evaluation to filter the results.
   ```
-GET /v1/ielts/evaluation/{id}
+GET /v1/toefl/evaluation/{id}
 ```
   </Step>
 </Steps>
@@ -76,7 +77,7 @@ GET /v1/ielts/evaluation/{id}
 
 ```bash cURL
 curl -X 'POST' \
-  'https://ilets-qv4g7htqyq-el.a.run.app/v1/ielts/evaluation/' \
+  'https://toffel-qv4g7htqyq-el.a.run.app/v1/toefl/evaluation/' \
   -H 'Authorization: Bearer <token>' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
@@ -86,7 +87,7 @@ curl -X 'POST' \
   "teacher_id": "T01",
   "parent_id": "P01",
   "student_id": "S01",
-  "exam_type": "ilets",
+  "exam_type": "ibt",
   "student_name": "John",
   "image_urls": [
     "string"
@@ -96,8 +97,8 @@ curl -X 'POST' \
       "question_id": "qid",
       "question_number": "1",
       "question_section": "Writing",
-      "question_type": "ilt001",
-      "question_text": "Some business observe that new employees who just graduated from a college or university seem to lack interpersonal skills needed for communication with their colleagues. \n\nWhat could be the reason for this? What solution can help address this problem?",
+      "question_type": "tf001",
+      "question_text": "Are you ready to go out for dinner? \nhint:Not yet.heard havent from Michael I",
       "question_multimedia_url": "string",
       "answer_text": "It is often believed that young employees who just graduated from  college and university tend not to possess interpersonal skills that are essential to communicating with co-workers. Their growing reliance on digital tools and independent lifestyles contributes to this problem. Opportunities to learn soft skills as well as interact with others through various activities should be promoted. \n\nThe primary reason for a lower level of interpersonal skills among young workers comes from the incredible amount of time they spend on electric gadgets these days. In other words, they are often addicted to them, avoiding meeting with other people. For instance, they are more likely to prefer spending time watching YouTube and playing online games, from which they are able to acquire special knowledge and skills of their own interests. This leads to their poor communication skills and even apathy toward others. Consequently, companies are required to provide more practical lessons where young workers can learn the importance of verbal skills so they can cooperate with each other as they are better able to understand their mutual needs and problems. \n\nAnother significant factor for the deteriorating interpersonal skills of young employees is their increasing independence from their earlier age. Indeed, more children are provided with their own room before elementary so they can be more responsible for managing themselves. However, this leads to fewer opportunities to interact with family and discourages their communication skills. Furthermore, they tend to feel uncomfortable in expressing their idea and emotions as they have a more separate lifestyle from their parents and brothers. Therefore, it is increasingly essential for industries to hold  exciting events such as sports festivals and BBQ parties to establish more intimate relationships with colleagues. Thus, they are more motivated to engage in a conversation and have more interest in people working in the same company. Moreover, the ability to make a proper word choice depending on whom they are talking to will be improved with the accumulating experience to interact with others in various situations. \n\nIn conclusion, the increasing amount of time that young workers spend on their electric tools and their growing isolation are critical reasons to lower their interpersonal skills. In order to solve these problems, companies are expected to offer educational opportunities for them to learn conversation skills and hold some exciting festivals and parties to make it less stressful to talk to various people",
       "answer_multimedia_url": "NA",
@@ -114,16 +115,16 @@ curl -X 'POST' \
   "teacher_id": "T01",
   "parent_id": "P01",
   "student_id": "S01",
-  "exam_type": "ilets",
+  "exam_type": "ibt",
   "student_name": "John",
   "image_urls": ["string"],
   "evaluation_text": [
     {
       "question_id": "qid",
       "question_number": "1",
-      "question_section": "Writing2",
-      "question_type": "ilt001",
-      "question_text": "Some business observe that new employees who just graduated from a college or university seem to lack interpersonal skills needed for communication with their colleagues.\n\nWhat could be the reason for this? What solution can help address this problem?",
+      "question_section": "Writing",
+      "question_type": "tf001",
+      "question_text": "Are you ready to go out for dinner? \nhint:Not yet.heard haven't from Michael I",
       "question_multimedia_url": "string",
       "answer_text": "It is often believed that young employees who just graduated from college and university tend not to possess interpersonal skills that are essential to communicating with co-workers. Their growing reliance on digital tools and independent lifestyles contributes to this problem. Opportunities to learn soft skills as well as interact with others through various activities should be promoted.\n\nThe primary reason for a lower level of interpersonal skills among young workers comes from the incredible amount of time they spend on electric gadgets these days. In other words, they are often addicted to them, avoiding meeting with other people. For instance, they are more likely to prefer spending time watching YouTube and playing online games, from which they are able to acquire special knowledge and skills of their own interests. This leads to their poor communication skills and even apathy toward others. Consequently, companies are required to provide more practical lessons where young workers can learn the importance of verbal skills so they can cooperate with each other as they are better able to understand their mutual needs and problems.\n\nAnother significant factor for the deteriorating interpersonal skills of young employees is their increasing independence from their earlier age. Indeed, more children are provided with their own room before elementary so they can be more responsible for managing themselves. However, this leads to fewer opportunities to interact with family and discourages their communication skills. Furthermore, they tend to feel uncomfortable in expressing their idea and emotions as they have a more separate lifestyle from their parents and brothers. Therefore, it is increasingly essential for industries to hold exciting events such as sports festivals and BBQ parties to establish more intimate relationships with colleagues. Thus, they are more motivated to engage in a conversation and have more interest in people working in the same company. Moreover, the ability to make a proper word choice depending on whom they are talking to will be improved with the accumulating experience to interact with others in various situations.\n\nIn conclusion, the increasing amount of time that young workers spend on their electric tools and their growing isolation are critical reasons to lower their interpersonal skills. In order to solve these problems, companies are expected to offer educational opportunities for them to learn conversation skills and hold some exciting festivals and parties to make it less stressful to talk to various people",
       "answer_multimedia_url": "NA",

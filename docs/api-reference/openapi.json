@@ -13,6 +13,10 @@
     {
       "url": "https://ilets-qv4g7htqyq-el.a.run.app",
       "description": "IELTS"
+    },
+    {
+      "url": "https://toefl-uat-qv4g7htqyq-el.a.run.app/",
+      "description": "TOEFL"
     }
   ],
   "components": {
@@ -25,10 +29,520 @@
     }
   },
 
-
-
-  
   "paths": {
+
+    "/v1/evaluation/{id_}": {
+      "get": {
+        "summary": "Retrieve Evaluation Report",
+        "description": "Allows B2B clients to retrieve a specific evaluation report using its unique identifier (ID).",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "123456789"
+            },
+            "description": "Unique identifier of the evaluation report."
+          },
+          {
+            "name": "accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"],
+              "default": "application/json"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "evaluation_id": {
+                      "type": "string",
+                      "example": "123456789"
+                    },
+                    "client_id": {
+                      "type": "string",
+                      "example": "c0001"
+                    },
+                    "institution_id": {
+                      "type": "string",
+                      "example": "67890XYZ",
+                      "description": "Identifier of the institution to which the student belongs (optional)."
+                    },
+                    "teacher_id": {
+                      "type": "string",
+                      "example": "98765LMN",
+                      "description": "Identifier of the teacher responsible for the evaluation (optional)."
+                    },
+                    "parent_id": {
+                      "type": "string",
+                      "example": "54321PQR",
+                      "description": "Identifier of the parent associated with the student (optional)."
+                    },
+                    "evaluation_data": {
+                      "type": "object",
+                      "properties": {
+                        "student_id": {
+                          "type": "string",
+                          "example": "11223STU"
+                        },
+                        "test_type": {
+                          "type": "string",
+                          "example": "essentials",
+                          "description": "Type of TOEFL exam the student is giving."
+                        },
+                        "student_name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "image_urls": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "example": [
+                            "http://example.com/image1.jpg",
+                            "http://example.com/image2.jpg"
+                          ],
+                          "description": "List of URLs pointing to the images submitted (optional)."
+                        },
+                        "evaluation_text": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "question_number": {
+                                "type": "string",
+                                "example": "1"
+                              },
+                              "question_id": {
+                                "type": "string",
+                                "example": "q1"
+                              },
+                              "image_url": {
+                                "type": "string",
+                                "format": "uri",
+                                "example": "http://example.com/image1_processed.jpg",
+                                "description": "Processed URL of the image related to the question (if applicable)."
+                              },
+                              "section": {
+                                "type": "string",
+                                "example": "writing"
+                              },
+                              "question_type": {
+                                "type": "string",
+                                "example": "tf002"
+                              },
+                              "question": {
+                                "type": "string",
+                                "example": "Summarize the points made in the lecture."
+                              },
+                              "question_media": {
+                                "type": "string",
+                                "format": "uri",
+                                "example": "http://example.com/audio1.mp3",
+                                "description": "URL of multimedia related to the question (optional)."
+                              },
+                              "answer": {
+                                "type": "string",
+                                "example": "The lecture discusses the various impacts of climate change."
+                              },
+                              "answer_media": {
+                                "type": "string",
+                                "format": "uri",
+                                "example": "http://example.com/audio2.mp3",
+                                "description": "URL of multimedia related to the answer (optional)."
+                              },
+                              "score": {
+                                "type": "integer",
+                                "example": 24,
+                                "description": "Score assigned to the answer."
+                              },
+                              "reason": {
+                                "type": "string",
+                                "example": "Good understanding of the lecture content but needs more detail."
+                              },
+                              "scope_of_improvement": {
+                                "type": "string",
+                                "example": "Provide more specific examples and details.",
+                                "description": "Feedback on areas of improvement."
+                              },
+                              "answer_objective_evaluation": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "objective_error_id": {
+                                      "type": "string",
+                                      "example": "e1"
+                                    },
+                                    "objective_error_name": {
+                                      "type": "string",
+                                      "example": "Grammar"
+                                    },
+                                    "objective_error_name_feedback": {
+                                      "type": "string",
+                                      "example": "Minor grammatical mistakes."
+                                    }
+                                  }
+                                },
+                                "description": "Objective evaluation errors and feedback."
+                              },
+                              "answer_holistic_evaluation": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "holistic_criteria_id": {
+                                      "type": "string",
+                                      "example": "h1"
+                                    },
+                                    "holistic_criteria_name": {
+                                      "type": "string",
+                                      "example": "Content"
+                                    },
+                                    "holistic_criteria_score": {
+                                      "type": "integer",
+                                      "example": 4
+                                    },
+                                    "holistic_criteria_name_feedback": {
+                                      "type": "string",
+                                      "example": "Well-covered but could be more thorough."
+                                    }
+                                  }
+                                },
+                                "description": "Holistic evaluation criteria, score, and feedback."
+                              },
+                              "answer_custom_evaluation": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "custom_criteria_id": {
+                                      "type": "string",
+                                      "example": "h1"
+                                    },
+                                    "custom_criteria_name": {
+                                      "type": "string",
+                                      "example": "Content"
+                                    },
+                                    "custom_criteria_score": {
+                                      "type": "integer",
+                                      "example": 4
+                                    },
+                                    "custom_criteria_name_feedback": {
+                                      "type": "string",
+                                      "example": "Well-covered but could be more thorough."
+                                    }
+                                  }
+                                },
+                                "description": "Custom evaluation criteria, score, and feedback."
+                              }
+                            },
+                            "required": [
+                              "question_number",
+                              "question_id",
+                              "section",
+                              "question_type",
+                              "question",
+                              "answer"
+                            ]
+                          },
+                          "description": "List of evaluated questions and answers."
+                        }
+                      },
+                      "required": [
+                        "student_id",
+                        "test_type",
+                        "student_name"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Evaluation report not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+
+
+ "/v1/toefl/evaluation/": {
+      "post": {
+        "summary": "Submit Evaluation Request",
+        "description": "Allows B2B clients to submit a request for evaluation directly by providing questions and respective answers in JSON format.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "client_id": {
+                    "type": "string",
+                    "description": "Unique identifier assigned to the client accessing the API.",
+                    "example": "12345ABC"
+                  },
+                  "institution_id": {
+                    "type": "string",
+                    "description": "Unique identifier of the institution (optional).",
+                    "example": "67890XYZ"
+                  },
+                  "teacher_id": {
+                    "type": "string",
+                    "description": "Identifier of the teacher (optional).",
+                    "example": "98765LMN"
+                  },
+                  "parent_id": {
+                    "type": "string",
+                    "description": "Unique identifier of the parent associated with the student (optional).",
+                    "example": "54321PQR"
+                  },
+                  "student_id": {
+                    "type": "string",
+                    "description": "Identifies the specific student for whom the evaluation is being requested.",
+                    "example": "11223STU"
+                  },
+                  "exam_type": {
+                    "type": "string",
+                    "description": "Type of TOEFL exam (essentials, ibt).",
+                    "example": "ibt",
+                    "enum": ["essentials", "ibt"]
+                  },
+                  "student_name": {
+                    "type": "string",
+                    "description": "Name of the student for whom the evaluation is being requested.",
+                    "example": "John Doe"
+                  },
+                  "image_urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of URLs pointing to the images of the evaluated work (optional).",
+                    "example": [
+                      "http://example.com/image1.jpg",
+                      "http://example.com/image2.jpg"
+                    ]
+                  },
+                  "evaluation_text": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "question_id": {
+                          "type": "string",
+                          "description": "Identifier of the question.",
+                          "example": "q1"
+                        },
+                        "question_number": {
+                          "type": "string",
+                          "description": "Number of the question.",
+                          "example": "1"
+                        },
+                        "question_section": {
+                          "type": "string",
+                          "description": "Section of the question (currently 'writing').",
+                          "example": "writing",
+                          "enum": ["writing"]
+                        },
+                        "question_type": {
+                          "type": "string",
+                          "description": "Type of the question. Check product description page for [Question Types details.](https://docs.crazygoldfish.com/products/toefl)",
+                          "example": "tf001",
+                          "enum":["tf001","tf002","tf002","tf003","tf004","tf005"]
+                        },
+                        "question_text": {
+                          "type": "string",
+                          "description": "Text of the question.",
+                          "example": "Are you ready to go out for dinner? \nhint:Not yet.heard haven't from Michael I."
+                        },
+                        "question_multimedia_url": {
+                          "type": "string",
+                          "description": "URL of multimedia related to the question (optional).",
+                          "example": "http://example.com/audio1.mp3"
+                        },
+                        "answer_text": {
+                          "type": "string",
+                          "description": "Text of the answer.",
+                          "example": "The lecture discusses the various impacts of climate change."
+                        },
+                        "answer_multimedia_url": {
+                          "type": "string",
+                          "description": "URL of multimedia related to the answer (optional).",
+                          "example": "http://example.com/audio2.mp3"
+                        },
+                        "custom_rubric_id": {
+                          "type": "string",
+                          "description": "Identifier of custom rubric for scoring.",
+                          "example": "1234"
+                        }
+                      },
+                      "required": [
+                        "question_id",
+                        "question_number",
+                        "question_section",
+                        "question_type",
+                        "question_text",
+                        "answer_text"
+                      ]
+                    },
+                    "description": "List of evaluation questions and answers."
+                  }
+                },
+                "required": [
+                  "client_id",
+                  "student_id",
+                  "exam_type",
+                  "student_name",
+                  "evaluation_text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Evaluation request submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "200"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Evaluation request submitted successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation_id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "detail": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "loc": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "msg": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"],
+              "default": "application/json"
+            }
+          }
+        ]
+      }
+    },
+
+
+
     "/v1/ielts/evaluation/": {
       "post": {
         "summary": "Submit Evaluation Request",
@@ -79,8 +593,7 @@
                   "image_urls": {
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "format": "uri"
+                      "type": "string"
                     },
                     "description": "List of URLs pointing to the images of the evaluated work (optional).",
                     "example": [
@@ -111,8 +624,9 @@
                         },
                         "question_type": {
                           "type": "string",
-                          "description": "Type of the question.",
-                          "example": "Describe some visual information in your own words (Task 1)"
+                          "description": "Type of the question. Check product description page for [Question Types details.](https://docs.crazygoldfish.com/products/ielts)",
+                          "example": "ilt001",
+                          "enum": ["ilt001", "ilt002", "ilt003", "ilt004"]
                         },
                         "question_text": {
                           "type": "string",
@@ -121,8 +635,7 @@
                         },
                         "question_multimedia_url": {
                           "type": "string",
-                          "description": "URL of multimedia related to the question (optional).",
-                          "format": "uri"
+                          "description": "URL of multimedia related to the question (optional)."
                         },
                         "answer_text": {
                           "type": "string",
@@ -131,8 +644,7 @@
                         },
                         "answer_multimedia_url": {
                           "type": "string",
-                          "description": "URL of multimedia related to the answer (optional).",
-                          "format": "uri"
+                          "description": "URL of multimedia related to the answer (optional)."
                         },
                         "custom_rubric_id": {
                           "type": "string",
@@ -162,31 +674,30 @@
               }
             }
           }
-          },
-          "responses": {
-            "200": {
-              "description": "Evaluation request submitted successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "200"
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Evaluation request submitted successfully"
-                      },
-                      "data": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "evaluation_id": {
-                              "type": "string"
-                            }
+        },
+        "responses": {
+          "200": {
+            "description": "Evaluation request submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "200"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Evaluation request submitted successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation_id": {
+                            "type": "string"
                           }
                         }
                       }
@@ -194,44 +705,45 @@
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "error": {
-                        "type": "string",
-                        "example": "Invalid request body"
-                      }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request body"
                     }
                   }
                 }
               }
             }
-          },
-          "security": [
-            {
-              "bearerAuth": []
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"],
+              "default": "application/json"
             }
-          ],
-          "parameters": [
-            {
-              "name": "accept",
-              "in": "header",
-              "required": true,
-              "schema": {
-                "type": "string",
-                "enum": ["application/json"],
-                "default": "application/json"
-              }
-            }
-          ]
-        }
+          }
+        ]
+      }
     },
-"/v1/ielts/evaluation/{id_}": {
+    "/v1/ielts/evaluation/{id_}": {
     "get": {
       "summary": "Retrieve Evaluation Report",
       "description": "Allows B2B clients to retrieve a specific evaluation report using its unique identifier (ID).",
@@ -349,11 +861,11 @@
                             },
                             "question_type": {
                               "type": "string",
-                              "example": "Describe some visual information in your own words (Task 1)"
+                              "example": "ilt001"
                             },
-                            "question": {
+                            "question_text": {
                               "type": "string",
-                              "example": "Summarize the points made in the lecture."
+                              "example": "You recently stayed for three nights at the\nMountainview Hotel. The hotel manager, David\nHodge, has written you an email asking for your\nfeedback on your stay.\nYou liked:\n• Location close to hiking trails\n• Restaurant, especially vegan options\nOne problem:\n• the heater in your room made a loud noise\nat night\nWrite a response email. Tell the manager:\n• What you liked\n• What was a problem\n• If you would return to the hotel for another\nStay\n\n"
                             },
                             "question_media": {
                               "type": "string",
@@ -361,9 +873,9 @@
                               "example": "http://example.com/audio1.mp3",
                               "description": "URL of multimedia related to the question (optional)."
                             },
-                            "answer": {
+                            "answer_text": {
                               "type": "string",
-                              "example": "The lecture discusses the various impacts of climate change."
+                              "example": "Hello David,\nI love staying at your Hotel specially for the location near the hiking\ntrails and the restaurant. I usually don't like vegan food but yours\nwas outstanding. As I said to your frontdesk staff the only problem\nthat I had was the heater that made an awfull amount of noise\nduring the night. I understand that there were no other rooms\navailable, but that doesn't really make the noise less loud.\nEventhoug I kinda clinged to the noise thing on this email l'd choose\nyour hotel for an eventual return trip, l'd just ask for a room with a\nquiet heater if that's the case.\n"
                             },
                             "answer_media": {
                               "type": "string",
@@ -1218,5 +1730,5 @@
 
             }
           }
-        }
+  }
       }

@@ -15,22 +15,43 @@ The Handwritten Notes Evaluation API offers a comprehensive suite of endpoints t
 Evaluatuion API
 </Card>
 
- ## Endpoints
+# Key Features
+- **Automated Grading**: Efficiently grade handwritten and digital assignments to save time and provide immediate feedback.
 
-### 1. Submit Evaluation Request
-> Submit a request for evaluation directly by providing reference links to the images. The API downloads the images separately, generates an evaluation report based on the provided data, and returns an acknowledgment along with an evaluation ID.
-```
+- **Personalized Insights**: Analyze evaluation data to offer customized learning experiences and improve instructional content.
+
+- **Scalability**: Handle large volumes of assessments during peak times without compromising accuracy or speed.
+
+- **Integration**: Seamlessly integrate with other educational tools to create a cohesive learning environment.
+
+- **Real-Time Feedback**: Provide instant feedback to students, allowing for immediate learning adjustments and improvements.
+
+
+## Endpoints
+
+<Steps>
+  <Step title="Submit Evaluation Request">
+  Submit a request for evaluation directly by providing reference links to the images. The API downloads the images separately, generates an evaluation report based on the provided data, and returns an acknowledgment along with an evaluation ID.
+  
+```bash
 POST /v1/evaluation
 ```
-### 2. Get Specific Evaluation Report
-> Retrieve a specific evaluation report using its unique identifier (ID). Clients can access past evaluations or reference specific reports by providing the evaluation ID.
+</Step>
 
-```
+<Step title="Get Specific Evaluation Report">
+Retrieve a specific evaluation report using its unique identifier (ID). Clients can access past evaluations or reference specific reports by providing the evaluation ID.
+
+```bash
 GET /v1/evaluation/{id}
 ```
-### 3. Get All Evaluation Reports
 
-> Retrieve all the evaluation report or for a specific set of handwritten notes. Clients can provide parameters such as student name, class, subject, and date of evaluation to filter the results.
-```
+</Step>
+
+<Step title="Get All Evaluation Reports">
+Retrieve all the evaluation report or for a specific set of handwritten notes. Clients can provide parameters such as student name, class, subject, and date of evaluation to filter the results.
+
+```bash
 GET /v1/evaluation
 ```
+</Step>
+</Steps>
